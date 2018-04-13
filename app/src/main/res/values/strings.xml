@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Test25</string>
+    <string name="movie">电影</string>
+    <string name="photo">图片</string>
+    <string name="ui">界面</string>
+    <string name="network">网络</string>
+</resources>
