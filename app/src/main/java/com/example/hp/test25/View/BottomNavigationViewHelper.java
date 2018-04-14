@@ -1,4 +1,4 @@
-package com.example.hp.test25;
+package com.example.hp.test25.view;
 
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;

@@ -1,4 +1,4 @@
-package com.example.hp.test25;
+package com.example.hp.test25.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.hp.test25.R;
 
 /**
  * Created by HP on 2018-04-13.

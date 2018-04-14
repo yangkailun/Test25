@@ -1,20 +1,16 @@
-package com.example.hp.test25;
+package com.example.hp.test25.view;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.hp.test25.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     private BottomNavigationView mBottomNav;
     private ViewPager mPager;
