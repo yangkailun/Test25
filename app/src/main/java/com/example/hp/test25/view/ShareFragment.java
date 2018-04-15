@@ -16,7 +16,11 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.hp.test25.R;
 import com.example.hp.test25.adapter.ShareAdapter;
 import com.example.hp.test25.object.Share;
+import com.example.hp.test25.object.ShareSql;
 import com.example.hp.test25.util.HttpUtil;
+
+import org.litepal.LitePal;
+import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +35,8 @@ import okhttp3.Response;
  */
 public class ShareFragment extends Fragment {
 
-    List<Share> shareList = new ArrayList<>();
+//    List<Share> shareList = new ArrayList<>();
+    List<ShareSql> shareSqlList = new ArrayList<>();
     String shareNum;
     private ShareAdapter adapter;
     private RecyclerView shareRecyclerView;
@@ -47,11 +52,21 @@ public class ShareFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_share, container, false);
 
+        //在这里加载原来数据库中的数据可以吗？这要理解Fragment的生命周期。现在(4.15)测试还可以。
+        shareSqlList = DataSupport.findAll(ShareSql.class);
+
         FloatingActionButton addFab = (FloatingActionButton)view.findViewById(R.id.fab);
         addFab.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
+
+
+                if(shareSqlList.isEmpty()) {
+                    //创建Shares数据库，但是现在还不确定放在这里是不是合适
+                    LitePal.getDatabase();
+                }
+
                 new MaterialDialog.Builder(getActivity())
                         .title("查询股票")
                         .content("请输入查询股票代码")
@@ -71,7 +86,7 @@ public class ShareFragment extends Fragment {
         shareRecyclerView = (RecyclerView)view.findViewById(R.id.share_recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2);
         shareRecyclerView.setLayoutManager(layoutManager);
-        adapter = new ShareAdapter(shareList);
+        adapter = new ShareAdapter(shareSqlList);
         shareRecyclerView.setAdapter(adapter);
 
         return view;
@@ -82,7 +97,6 @@ public class ShareFragment extends Fragment {
         HttpUtil.sendOkHttpRequest(shareUrl ,new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                //暂时不处理
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -96,18 +110,21 @@ public class ShareFragment extends Fragment {
                 final String responseText = response.body().string();
                 final Share share = HttpUtil.handleSharesResponse(responseText);
                 if(share!=null && "0".equals(share.error_code)) {
-                    shareList.add(share);
+
+                    //把请求的数据添加到数据库
+                    ShareSql shareSql = new ShareSql(share);
+                    shareSql.save();
+                    shareSqlList.add(shareSql);
+
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            //adapter.notifyItemInserted(shareList.size()-1);  //及时刷新RecyclerView
-                            //shareRecyclerView.scrollToPosition(shareList.size()-1);//将RecyclerView定位到最后一行
-                            adapter.notifyDataSetChanged();
+                            adapter.notifyDataSetChanged(); //及时刷新界面
+                            shareRecyclerView.scrollToPosition(shareSqlList.size()-1);//将RecyclerView定位到最后一行
                         }
                     });
 
                 }else{
-                    //暂不处理
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

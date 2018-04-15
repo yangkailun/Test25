@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.hp.test25.R;
-import com.example.hp.test25.object.Share;
+import com.example.hp.test25.object.ShareSql;
 
 import java.util.List;
 
@@ -19,7 +19,9 @@ import java.util.List;
 
 public class ShareAdapter extends RecyclerView.Adapter<ShareAdapter.ViewHolder> {
     private Context mContext;
-    private List<Share> mShareList;
+
+    private List<ShareSql> mShareSqlList;  //尝试替换Share类，只让Share类负责与GSON转换，现在（4.15）是测试成功了
+
     private final String idTitleString     =      "股票代码  : ";
     private final String nameTitleString   =      "股票名称  : ";
     private final String nowPriTitleString       ="当前价格  : ";
@@ -35,8 +37,8 @@ public class ShareAdapter extends RecyclerView.Adapter<ShareAdapter.ViewHolder> 
             shareInfo = (TextView)view.findViewById(R.id.share_info);
         }
     }
-    public ShareAdapter(List<Share> shareList){
-        mShareList = shareList;
+    public ShareAdapter(List<ShareSql> shareSqlList){
+        mShareSqlList = shareSqlList;
     }
 
     @Override
@@ -50,18 +52,19 @@ public class ShareAdapter extends RecyclerView.Adapter<ShareAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
-        Share share = mShareList.get(position);
-        holder.shareInfo.setText(idTitleString+share.resultData.dataInfo.shareId+"\n"
-                +nameTitleString+share.resultData.dataInfo.name+"\n"
-                +nowPriTitleString+share.resultData.dataInfo.nowPrice+"\n"
-                +todayStartPriTitleString+share.resultData.dataInfo.todayStartPri+"\n"
-                +yestodEndPriTitleString+share.resultData.dataInfo.yestodEndPri);
+
+        ShareSql shareSql = mShareSqlList.get(position);
+        holder.shareInfo.setText(idTitleString+shareSql.getShareId()+"\n"
+        +nameTitleString+shareSql.getName()+"\n"
+        +nowPriTitleString+shareSql.getNowPri()+"\n"
+        +todayStartPriTitleString+shareSql.getTodayStartPri()+"\n"
+        +yestodEndPriTitleString+shareSql.getYestodEndPri());
 
     }
 
     @Override
     public int getItemCount(){
-        return mShareList.size();
+        return mShareSqlList.size();
     }
 }
 

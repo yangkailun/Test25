@@ -1,16 +1,15 @@
 package com.example.hp.test25.view;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.example.hp.test25.R;
 import com.example.hp.test25.adapter.ViewPagerAdapter;
-import com.example.hp.test25.helper.BottomNavigationViewHelper;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity{
         mBottomNav = (BottomNavigationView)findViewById(R.id.bottom_nav);
         mPager = (ViewPager)findViewById(R.id.viewpager);
 
-        BottomNavigationViewHelper.disableShiftMode(mBottomNav);
+        //BottomNavigationViewHelper.disableShiftMode(mBottomNav);
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item ){
