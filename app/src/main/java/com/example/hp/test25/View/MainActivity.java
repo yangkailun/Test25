@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.example.hp.test25.R;
+import com.example.hp.test25.adapter.ViewPagerAdapter;
+import com.example.hp.test25.helper.BottomNavigationViewHelper;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -97,7 +99,8 @@ public class MainActivity extends AppCompatActivity{
         adapter.addFragment(BaseFragment.newInstance("统计"));
         adapter.addFragment(BaseFragment.newInstance("预算"));
         adapter.addFragment(BaseFragment.newInstance("收支"));
-        adapter.addFragment(BaseFragment.newInstance("股票"));
+        //adapter.addFragment(BaseFragment.newInstance("股票"));
+        adapter.addFragment(new ShareFragment());
         adapter.addFragment(BaseFragment.newInstance("我"));
 
         mPager.setAdapter(adapter);

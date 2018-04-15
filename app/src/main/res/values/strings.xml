@@ -4,4 +4,7 @@
     <string name="photo">图片</string>
     <string name="ui">界面</string>
     <string name="network">网络</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

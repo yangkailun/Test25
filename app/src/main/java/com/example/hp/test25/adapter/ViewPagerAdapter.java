@@ -1,4 +1,4 @@
-package com.example.hp.test25.view;
+package com.example.hp.test25.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
