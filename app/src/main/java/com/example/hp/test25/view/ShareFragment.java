@@ -93,7 +93,9 @@ public class ShareFragment extends Fragment {
     }
 
     public void requestShares(final String shareNum){
-        String shareUrl = " http://apis.haoservice.com/lifeservice/stock/hs?gid="+shareNum+"&key=f5de2345f8e3477f8a0653f1ca110d54";
+     //   String shareUrl = " http://apis.haoservice.com/lifeservice/stock/hs?gid="+shareNum+"&key=f5de2345f8e3477f8a0653f1ca110d54";
+        //由于网上的股票接口稀缺，在本地搭建一个服务器测试
+        String shareUrl = "http://192.168.1.100/"+shareNum+".json";
         HttpUtil.sendOkHttpRequest(shareUrl ,new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -136,5 +138,7 @@ public class ShareFragment extends Fragment {
         });
 
     }
+
+
 
 }

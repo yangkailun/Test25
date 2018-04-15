@@ -8,8 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.hp.test25.R;
 import com.example.hp.test25.object.ShareSql;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
@@ -47,7 +51,37 @@ public class ShareAdapter extends RecyclerView.Adapter<ShareAdapter.ViewHolder> 
             mContext = parent.getContext();
         }
         View view = LayoutInflater.from(mContext).inflate(R.layout.share_item,parent,false);
-        return new ViewHolder(view);
+        //加入长按删除股票信息功能
+        final ViewHolder holder = new ViewHolder(view);
+        holder.shareInfo.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new MaterialDialog.Builder(mContext)
+                        .title("删除")
+                        .content("确定删除吗？")
+                        .positiveText("确定")
+                        .negativeText("取消")
+                        .onPositive(new MaterialDialog.SingleButtonCallback(){
+                            @Override
+                            public void onClick(MaterialDialog dialog, DialogAction which){
+                                int position = holder.getAdapterPosition();
+                                ShareSql shareSql= mShareSqlList.get(position);
+                                DataSupport.deleteAll(ShareSql.class,"shareId=?",shareSql.getShareId());
+                                mShareSqlList.remove(position);
+                                notifyDataSetChanged();
+                            }
+                        })
+                        .onNegative(new MaterialDialog.SingleButtonCallback(){
+                            @Override
+                            public void onClick(MaterialDialog dialog, DialogAction which){
+
+                            }
+                        })
+                        .show();
+                return true;
+            }
+        });
+        return holder;
     }
 
     @Override
