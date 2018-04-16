@@ -4,6 +4,7 @@ package com.example.hp.test25.view;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
@@ -41,6 +42,7 @@ public class ShareFragment extends Fragment {
     String shareNum;
     private ShareAdapter adapter;
     private RecyclerView shareRecyclerView;
+    private SwipeRefreshLayout swipeRefresh;
 
     public ShareFragment() {
         // Required empty public constructor
@@ -55,6 +57,16 @@ public class ShareFragment extends Fragment {
 
         //在这里加载原来数据库中的数据可以吗？这要理解Fragment的生命周期。现在(4.15)测试还可以。
         shareSqlList = DataSupport.findAll(ShareSql.class);
+
+        //实现下拉刷新所有股票信息的功能
+        swipeRefresh = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh);
+        swipeRefresh.setColorSchemeResources(R.color.orange);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            @Override
+            public void onRefresh(){
+                refreshShares();
+            }
+        });
 
         FloatingActionButton addFab = (FloatingActionButton)view.findViewById(R.id.fab);
         addFab.setOnClickListener(new View.OnClickListener(){
@@ -132,7 +144,7 @@ public class ShareFragment extends Fragment {
                         public void run() {
                             adapter.notifyDataSetChanged(); //及时刷新界面
                             shareRecyclerView.scrollToPosition(shareSqlList.size()-1);//将RecyclerView定位到最后一行
-                            Toast.makeText(getActivity(),"股票数据已更新！",Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(getActivity(),"股票数据已更新！",Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -149,6 +161,30 @@ public class ShareFragment extends Fragment {
 
     }
 
+    private void refreshShares(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for(int i = 0; i < shareSqlList.size(); i ++){
+                            //通过这个刷新，发现自己写的requestShares的还是做得事情太多了！函数不专注，后面用它就效率不高，人做事又何尝不是呢！
+                            requestShares(shareSqlList.get(i).getShareId());
+                        }
+                        swipeRefresh.setRefreshing(false);  //起初写代码都忘记关了
+                    }
+                });
+
+            }
+        }).start();
+
+    }
 
 
 }
