@@ -17,6 +17,7 @@ import com.example.hp.test25.R;
 import com.example.hp.test25.adapter.ShareAdapter;
 import com.example.hp.test25.object.Share;
 import com.example.hp.test25.object.ShareSql;
+import com.example.hp.test25.util.FindShare;
 import com.example.hp.test25.util.HttpUtil;
 
 import org.litepal.LitePal;
@@ -95,7 +96,7 @@ public class ShareFragment extends Fragment {
     public void requestShares(final String shareNum){
      //   String shareUrl = " http://apis.haoservice.com/lifeservice/stock/hs?gid="+shareNum+"&key=f5de2345f8e3477f8a0653f1ca110d54";
         //由于网上的股票接口稀缺，在本地搭建一个服务器测试
-        String shareUrl = "http://192.168.1.100/"+shareNum+".json";
+        String shareUrl = "http://192.168.1.101/"+shareNum+".json";  //每次测试都要查看是否变更了地址
         HttpUtil.sendOkHttpRequest(shareUrl ,new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -113,16 +114,25 @@ public class ShareFragment extends Fragment {
                 final Share share = HttpUtil.handleSharesResponse(responseText);
                 if(share!=null && "0".equals(share.error_code)) {
 
-                    //把请求的数据添加到数据库
+                    //把请求的数据添加到数据库，先要在现存的List中查找是否存在
                     ShareSql shareSql = new ShareSql(share);
-                    shareSql.save();
-                    shareSqlList.add(shareSql);
+                    int position;
+                    //int 就可以用==
+                    if((position=FindShare.findShare(shareSqlList,shareSql))==FindShare.NO_EXIST){
+                        shareSql.save();
+                        shareSqlList.add(shareSql);
+                    }else {
+                        shareSqlList.set(position, shareSql);
+                        shareSql.updateAll("shareId = ?",shareSql.getShareId());
+                    }
+
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             adapter.notifyDataSetChanged(); //及时刷新界面
                             shareRecyclerView.scrollToPosition(shareSqlList.size()-1);//将RecyclerView定位到最后一行
+                            Toast.makeText(getActivity(),"股票数据已更新！",Toast.LENGTH_SHORT).show();
                         }
                     });
 
