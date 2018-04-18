@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="方向"
+        android:textColor="#80000000"
+        android:textSize="@dimen/dialog_deal_title"/>
+    <RadioGroup
+        android:id="@+id/income_expenses_radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="收入"
+            android:textSize="@dimen/dialog_deal_entry"
+            android:layout_marginRight="50dp"/>
+        <RadioButton
+            android:id="@+id/expenses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="支出"
+            android:textSize="@dimen/dialog_deal_entry"
+            />
+    </RadioGroup>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="金额"
+        android:textColor="#80000000"
+        android:textSize="@dimen/dialog_deal_title"/>
+    <EditText
+        android:id="@+id/money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:textSize="@dimen/dialog_deal_entry"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="类型"
+        android:textColor="#80000000"
+        android:textSize="@dimen/dialog_deal_title" />
+    <RadioGroup
+        android:id="@+id/expenses_type_Radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/clothes_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="衣"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/dialog_deal_entry"
+                    />
+                <RadioButton
+                    android:id="@+id/food_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="食"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/dialog_deal_entry" />
+                <RadioButton
+                    android:id="@+id/home_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="住"
+                    android:layout_weight="1"
+                    android:textSize="18sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/walk_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="行"
+                    android:layout_weight="1"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/other_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="其他消费"
+                    android:layout_weight="1"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/income_type_Radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <RadioButton
+            android:id="@+id/profession_radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="职业"
+            android:layout_weight="1"
+            android:textSize="@dimen/dialog_deal_entry"
+            />
+        <RadioButton
+            android:id="@+id/invest_radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="投资"
+            android:layout_weight="1"
+            android:textSize="@dimen/dialog_deal_entry" />
+        <RadioButton
+            android:id="@+id/others_radio"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:text="其他收入"
+
+            android:textSize="18sp" />
+    </RadioGroup>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="备注"
+        android:textColor="#80000000"
+        android:textSize="@dimen/dialog_deal_title"/>
+    <EditText
+        android:id="@+id/remark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dialog_deal_entry"/>
+
+    <DatePicker
+        android:id="@+id/dataPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        >
+    </DatePicker>
+</LinearLayout>

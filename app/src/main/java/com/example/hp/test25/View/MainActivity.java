@@ -97,8 +97,9 @@ public class MainActivity extends AppCompatActivity{
 
         adapter.addFragment(BaseFragment.newInstance("统计"));
         adapter.addFragment(BaseFragment.newInstance("预算"));
-        adapter.addFragment(BaseFragment.newInstance("收支"));
+        //adapter.addFragment(BaseFragment.newInstance("收支"));
         //adapter.addFragment(BaseFragment.newInstance("股票"));
+        adapter.addFragment(new IncomeExpensesFragment());
         adapter.addFragment(new ShareFragment());
         adapter.addFragment(BaseFragment.newInstance("我"));
 

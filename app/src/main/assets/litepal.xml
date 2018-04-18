@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <litepal>
     <dbname value="Shares"></dbname>
-    <version value="2"></version>
+    <version value="3"></version>
     <list>
         <mapping class="com.example.hp.test25.object.ShareSql"></mapping>
+        <mapping class="com.example.hp.test25.object.Deal"></mapping>
     </list>
 </litepal>

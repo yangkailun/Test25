@@ -76,7 +76,7 @@ public class ShareFragment extends Fragment {
 
 
                 if(shareSqlList.isEmpty()) {
-                    //创建Shares数据库，但是现在还不确定放在这里是不是合适
+                    //创建Shares数据库，但是现在还不确定放在这里是不是合适,其实为空并不一定就是没有数据库啊
                     LitePal.getDatabase();
                 }
 
