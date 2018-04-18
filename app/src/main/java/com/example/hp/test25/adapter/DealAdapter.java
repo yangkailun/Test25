@@ -43,6 +43,9 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.ViewHolder> {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.deal,parent,false);
         ViewHolder holder = new ViewHolder(view);
+
+
+
         return holder;
     }
 
