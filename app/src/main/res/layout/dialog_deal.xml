@@ -56,16 +56,8 @@
         android:id="@+id/expenses_type_Radio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:visibility="gone">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
                 <RadioButton
                     android:id="@+id/clothes_radio"
                     android:layout_width="match_parent"
@@ -88,11 +80,7 @@
                     android:text="住"
                     android:layout_weight="1"
                     android:textSize="18sp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+
 
                 <RadioButton
                     android:id="@+id/walk_radio"
@@ -109,15 +97,13 @@
                     android:text="其他消费"
                     android:layout_weight="1"
                     android:textSize="18sp" />
-            </LinearLayout>
-        </LinearLayout>
     </RadioGroup>
 
     <RadioGroup
         android:id="@+id/income_type_Radio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:visibility="visible">
 
         <RadioButton
