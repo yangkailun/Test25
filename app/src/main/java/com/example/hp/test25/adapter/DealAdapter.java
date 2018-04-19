@@ -1,5 +1,7 @@
 package com.example.hp.test25.adapter;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,10 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.hp.test25.R;
 import com.example.hp.test25.object.Deal;
 import com.example.hp.test25.util.TimeUti;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
@@ -21,6 +26,7 @@ import java.util.List;
 
 public class DealAdapter extends RecyclerView.Adapter<DealAdapter.ViewHolder> {
 
+    private Context mContext;
     private List<Deal> mDealList;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -44,10 +50,42 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType){
+        if(mContext == null){
+            mContext = parent.getContext();
+        }
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.deal,parent,false);
         final ViewHolder holder = new ViewHolder(view);
 
+        holder.dealCardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                new MaterialDialog.Builder(mContext)
+                        .title("删除")
+                        .content("确定删除吗？")
+                        .positiveText("确定")
+                        .negativeText("取消")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                int position = holder.getAdapterPosition();
+                                Deal deal = mDealList.get(position);
+                                DataSupport.deleteAll(Deal.class,"id=?",deal.getId()+"");
+                                mDealList.remove(position);
+                                notifyDataSetChanged();
+                            }
+                        })
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                            }
+                        }).show();
+
+                return false;
+            }
+        });
 
         holder.dealCardView.setOnClickListener(new View.OnClickListener() {
             @Override

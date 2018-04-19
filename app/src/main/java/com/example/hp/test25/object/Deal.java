@@ -20,12 +20,20 @@ public class Deal extends DataSupport{
     public static final int INVEST = 8;
     public static final int OTHERS = 9;
 
+    private int id;    //存储在数据库的主键
     private int direction;     //方向:收入或支出
     private float money;
     private int type;   //类型：衣食住行其他;
     private String remark;
     private int time;   //时间：保存秒数
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     public int getDirection() {
         return direction;
     }

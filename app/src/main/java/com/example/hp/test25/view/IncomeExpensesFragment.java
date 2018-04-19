@@ -1,6 +1,8 @@
 package com.example.hp.test25.view;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -122,9 +124,19 @@ public class IncomeExpensesFragment extends Fragment {
 
                                     deal.setRemark(remarkEdit.getText().toString());
                                     deal.setTime(datePicker.getYear()*10000+(datePicker.getMonth()+1)*100+datePicker.getDayOfMonth());
+
+                                    //添加唯一主键
+                                    SharedPreferences pref = getActivity().getSharedPreferences("deal_id", Context.MODE_PRIVATE);
+                                    int dealId = pref.getInt("id",0);
+                                    deal.setId(dealId);
+
                                     deal.save();
                                     dealList.add(deal);
                                     adapter.notifyDataSetChanged();
+
+                                    SharedPreferences.Editor editor = pref.edit();  //主键加1
+                                    editor.putInt("id",++dealId);
+                                    editor.apply();
                                 }else {
                                     Toast.makeText(getActivity(),"信息不全",Toast.LENGTH_SHORT).show();
                                 }
