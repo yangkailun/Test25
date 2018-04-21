@@ -3,6 +3,37 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/income_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="收入情况"
+            android:layout_margin="2dp"
+            android:background="@color/orange"/>
+        <Button
+            android:id="@+id/expense_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="支出情况"
+            android:layout_margin="2dp"
+            android:background="@color/orange"/>
+        <Button
+            android:id="@+id/scale_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="收支比例"
+            android:layout_margin="2dp"
+            android:background="@color/orange"/>
+
+    </LinearLayout>
+
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/income_chart"
         android:layout_width="match_parent"
