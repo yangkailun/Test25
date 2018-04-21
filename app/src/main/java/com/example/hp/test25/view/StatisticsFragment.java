@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 
 import com.example.hp.test25.R;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 
@@ -21,6 +23,13 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class StatisticsFragment extends Fragment {
+
+    protected String[] mParties = new String[] {
+            "Party A", "Party B", "Party C", "Party D", "Party E", "Party F", "Party G", "Party H",
+            "Party I", "Party J", "Party K", "Party L", "Party M", "Party N", "Party O", "Party P",
+            "Party Q", "Party R", "Party S", "Party T", "Party U", "Party V", "Party W", "Party X",
+            "Party Y", "Party Z"
+    };
 
     private PieChart incomePieChart;
 
@@ -66,7 +75,12 @@ public class StatisticsFragment extends Fragment {
     private void setData(int count, float range){
         float mult = range;
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
-        entries.add(new PieEntry((float)(Math.random()*mult)+mult/5));
+        for(int i = 0; i<count;i++){
+            entries.add(new PieEntry((float) ((Math.random() * mult) + mult / 5),
+                    mParties[i % mParties.length],
+                    getResources().getDrawable(R.drawable.star)));
+        }
+
         PieDataSet dataSet = new PieDataSet(entries,"Election Results");
         dataSet.setDrawIcons(false);
         dataSet.setSliceSpace(3f);
@@ -93,7 +107,15 @@ public class StatisticsFragment extends Fragment {
         colors.add(ColorTemplate.getHoloBlue());
         dataSet.setColors(colors);
 
-        //PieData data
+        PieData data = new PieData(dataSet);
+        data.setValueFormatter(new PercentFormatter());
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.WHITE);
+        //data.setValueTypeface(mTfLight);
+        incomePieChart.setData(data);
+
+        incomePieChart.highlightValues(null);
+        incomePieChart.invalidate();
     }
 
 }

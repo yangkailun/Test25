@@ -59,7 +59,7 @@ public class ShareFragment extends Fragment {
         shareSqlList = DataSupport.findAll(ShareSql.class);
 
         //实现下拉刷新所有股票信息的功能
-        swipeRefresh = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh);
+        swipeRefresh = view.findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.orange);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override

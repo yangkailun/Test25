@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import okhttp3.Response;
 public class MeFragment extends Fragment {
 
     private ImageView bingPicImg;
+    private SwipeRefreshLayout refreshLayout;
 
     public MeFragment() {
         // Required empty public constructor
@@ -44,8 +46,17 @@ public class MeFragment extends Fragment {
         if(bingPic != null){
             Glide.with(getActivity()).load(bingPic).into(bingPicImg);
         }else {
-            loadBingPic();
+            loadBingPic(false);
         }
+
+        refreshLayout = view.findViewById(R.id.swipe_refresh_me);
+        refreshLayout.setColorSchemeResources(R.color.orange);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefresh();
+            }
+        });
 
         return view;
     }
@@ -53,7 +64,7 @@ public class MeFragment extends Fragment {
     /**
      * 加载必应每日一图
      */
-    private void loadBingPic(){
+    private void loadBingPic(final boolean isRefresh){
         String requestBingPic = "http://guolin.tech/api/bing_pic";
         HttpUtil.sendOkHttpRequest(requestBingPic, new Callback() {
             @Override
@@ -72,10 +83,28 @@ public class MeFragment extends Fragment {
                     @Override
                     public void run() {
                         Glide.with(getActivity()).load(bingPic).into(bingPicImg);
+                        if(isRefresh){
+                            refreshLayout.setRefreshing(false);
+                        }
                     }
                 });
             }
         });
+    }
+
+    private void swipeRefresh(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    Thread.sleep(2000);
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+                loadBingPic(true);
+
+            }
+        }).start();
     }
 
 }

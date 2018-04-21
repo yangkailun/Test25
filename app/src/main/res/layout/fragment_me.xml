@@ -3,11 +3,18 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_me"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <ImageView
         android:id="@+id/bing_pic_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 
 
