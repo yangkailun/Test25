@@ -137,6 +137,8 @@ public class IncomeExpensesFragment extends Fragment {
                                     SharedPreferences.Editor editor = pref.edit();  //主键加1
                                     editor.putInt("id",++dealId);
                                     editor.apply();
+
+                                    BudgetFragment.adapter.notifyDataSetChanged(); //在添加收支情况后刷新预算
                                 }else {
                                     Toast.makeText(getActivity(),"信息不全",Toast.LENGTH_SHORT).show();
                                 }

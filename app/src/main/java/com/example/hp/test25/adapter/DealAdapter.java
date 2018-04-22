@@ -15,6 +15,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.hp.test25.R;
 import com.example.hp.test25.object.Deal;
 import com.example.hp.test25.util.TimeUti;
+import com.example.hp.test25.view.BudgetFragment;
 
 import org.litepal.crud.DataSupport;
 
@@ -74,6 +75,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.ViewHolder> {
                                 DataSupport.deleteAll(Deal.class,"id=?",deal.getId()+"");
                                 mDealList.remove(position);
                                 notifyDataSetChanged();
+                                BudgetFragment.adapter.notifyDataSetChanged(); //在删除收支时刷新预算
                             }
                         })
                         .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -94,7 +96,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.ViewHolder> {
                 Deal deal = mDealList.get(position);
                 boolean wrapInScrollView = true;
                 MaterialDialog dialog = new MaterialDialog.Builder(parent.getContext())
-                        .title("详细")
+                        .title("收支详细")
                         .customView(R.layout.detail_deal,wrapInScrollView)
                         .positiveText("确定")
                         .build();

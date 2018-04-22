@@ -2,6 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/budget_cardview"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:cardCornerRadius="4dp"
@@ -9,95 +10,95 @@
     android:layout_marginBottom="1dp"
     >
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:orientation="vertical"
-    android:background="@color/green">
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/budget_id"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:text="1"
-            android:gravity="center"
-            android:textSize="30sp"/>
+        android:layout_height="150dp"
+        android:orientation="vertical"
+        android:background="@color/green">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="起止时间:"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/start_time"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:text="至"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/end_time"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_gravity="center"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <TextView
+                android:id="@+id/budget_id"
                 android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="60dp"
-                android:text="收入"
-                android:textSize="20sp"
-                android:gravity="center"/>
+                android:layout_height="60dp"
+                android:text="1"
+                android:gravity="center"
+                android:textSize="30sp"/>
 
-            <com.daimajia.numberprogressbar.NumberProgressBar
-                android:id="@+id/income_bar"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                custom:progress_max="100"/>
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="起止时间:"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/start_time"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="至"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/end_time"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_gravity="center"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="60dp"
-                android:text="支出"
-                android:textSize="20sp"
-                android:gravity="center"/>
-            <com.daimajia.numberprogressbar.NumberProgressBar
-                android:id="@+id/expense_bar"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                custom:progress_max="100"/>
-        </LinearLayout>
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="60dp"
+                    android:text="收入"
+                    android:textSize="20sp"
+                    android:gravity="center"/>
 
+                <com.daimajia.numberprogressbar.NumberProgressBar
+                    android:id="@+id/income_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    custom:progress_max="100"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="60dp"
+                    android:text="支出"
+                    android:textSize="20sp"
+                    android:gravity="center"/>
+                <com.daimajia.numberprogressbar.NumberProgressBar
+                    android:id="@+id/expense_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    custom:progress_max="100"/>
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 </android.support.v7.widget.CardView>

@@ -33,6 +33,7 @@ import java.util.List;
  */
 public class BudgetFragment extends Fragment {
 
+    public static BudgetAdapter adapter;
     private List<Budget> budgetList = new ArrayList<>();
     private FloatingActionButton budgetAdd;
     private EditText startYear,endYear,startMonth,endMonth,startDay,endDay,incomeBudget,expenseBudget;
@@ -42,9 +43,11 @@ public class BudgetFragment extends Fragment {
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_budget, container, false);
 
@@ -53,8 +56,9 @@ public class BudgetFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.budget_recycler);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(manager);
-        final BudgetAdapter adapter = new BudgetAdapter(budgetList);
+        adapter = new BudgetAdapter(budgetList);
         recyclerView.setAdapter(adapter);
+
 
         budgetAdd = view.findViewById(R.id.budget_add);
         budgetAdd.setOnClickListener(new View.OnClickListener() {
