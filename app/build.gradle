@@ -35,5 +35,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:27.+'
     compile 'org.litepal.android:core:1.6.1'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    compile 'com.daimajia.numberprogressbar:library:1.4@aar'
     testCompile 'junit:junit:4.12'
 }

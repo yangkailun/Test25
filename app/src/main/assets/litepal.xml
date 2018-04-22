@@ -5,5 +5,6 @@
     <list>
         <mapping class="com.example.hp.test25.object.ShareSql"></mapping>
         <mapping class="com.example.hp.test25.object.Deal"></mapping>
+        <mapping class="com.example.hp.test25.object.Budget"></mapping>
     </list>
 </litepal>

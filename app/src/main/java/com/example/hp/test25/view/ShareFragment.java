@@ -68,7 +68,7 @@ public class ShareFragment extends Fragment {
             }
         });
 
-        FloatingActionButton addFab = (FloatingActionButton)view.findViewById(R.id.fab);
+        FloatingActionButton addFab = view.findViewById(R.id.fab);
         addFab.setOnClickListener(new View.OnClickListener(){
 
             @Override

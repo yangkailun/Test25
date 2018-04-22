@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.example.hp.test25.R;
 import com.example.hp.test25.object.Deal;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -111,6 +112,8 @@ public class StatisticsFragment extends Fragment {
 
         incomePieChart.setRotationEnabled(true);  //设置图表能否手动转动
         incomePieChart.setHighlightPerTapEnabled(true);  //设置图表点击Item高亮是否可用
+
+        incomePieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);  //设置出场动画
 
     }
 

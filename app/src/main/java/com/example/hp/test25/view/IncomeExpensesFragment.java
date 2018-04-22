@@ -56,7 +56,7 @@ public class IncomeExpensesFragment extends Fragment {
 
         dealList = DataSupport.findAll(Deal.class);
 
-        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.income_expenses_recycler);
+        RecyclerView recyclerView = view.findViewById(R.id.income_expenses_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         final DealAdapter adapter = new DealAdapter(dealList);
