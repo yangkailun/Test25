@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity{
     private BottomNavigationView mBottomNav;
     private ViewPager mPager;
     private MenuItem menuItem;
+//    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity{
     private void initView(){
         mBottomNav = (BottomNavigationView)findViewById(R.id.bottom_nav);
         mPager = (ViewPager)findViewById(R.id.viewpager);
+//        fab = findViewById(R.id.fab_main);
+//        fab.setVisibility(View.GONE);
 
         BottomNavigationViewHelper.disableShiftMode(mBottomNav);
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
@@ -38,18 +41,23 @@ public class MainActivity extends AppCompatActivity{
                 switch (item.getItemId()){
                     case R.id.item_statistics:
                         mPager.setCurrentItem(0);
+//                        fab.setVisibility(View.GONE);
                         break;
                     case R.id.item_budget:
                         mPager.setCurrentItem(1);
+//                        fab.setVisibility(View.VISIBLE);
                         break;
                     case R.id.item_change:
                         mPager.setCurrentItem(2);
+//                        fab.setVisibility(View.VISIBLE);
                         break;
                     case R.id.item_shares:
+//                        fab.setVisibility(View.VISIBLE);
                         mPager.setCurrentItem(3);
                         break;
                     case R.id.item_me:
                         mPager.setCurrentItem(4);
+//                        fab.setVisibility(View.GONE);
                         break;
                 }
                 return false;
