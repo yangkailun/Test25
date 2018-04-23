@@ -24,9 +24,9 @@
         android:title="股票"
         />
 
-    <item
-        android:id="@+id/item_me"
-        android:icon="@mipmap/ic_me"
-        android:title="我"
-        />
+    <!--<item-->
+        <!--android:id="@+id/item_me"-->
+        <!--android:icon="@mipmap/ic_me"-->
+        <!--android:title="我"-->
+        <!--/>-->
 </menu>

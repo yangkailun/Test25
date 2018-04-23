@@ -55,10 +55,10 @@ public class MainActivity extends AppCompatActivity{
 //                        fab.setVisibility(View.VISIBLE);
                         mPager.setCurrentItem(3);
                         break;
-                    case R.id.item_me:
-                        mPager.setCurrentItem(4);
-//                        fab.setVisibility(View.GONE);
-                        break;
+//                    case R.id.item_me:
+//                        mPager.setCurrentItem(4);
+////                        fab.setVisibility(View.GONE);
+//                        break;
                 }
                 return false;
             }
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity{
         adapter.addFragment(new IncomeExpensesFragment());
         adapter.addFragment(new ShareFragment());
        // adapter.addFragment(BaseFragment.newInstance("我"));
-        adapter.addFragment(new MeFragment());
+//        adapter.addFragment(new MeFragment());
 
         mPager.setAdapter(adapter);
 
