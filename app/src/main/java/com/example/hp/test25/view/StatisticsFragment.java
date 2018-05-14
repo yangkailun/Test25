@@ -3,12 +3,15 @@ package com.example.hp.test25.view;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.hp.test25.R;
 import com.example.hp.test25.object.Deal;
 import com.github.mikephil.charting.animation.Easing;
@@ -41,7 +44,7 @@ public class StatisticsFragment extends Fragment {
     };
     private PieChart incomePieChart;
 
-    private Button incomeButton, expenseButton, scaleButton;
+    private Button incomeButton, expenseButton, scaleButton,dateButton;
 
     public StatisticsFragment() {
         // Required empty public constructor
@@ -56,6 +59,14 @@ public class StatisticsFragment extends Fragment {
         incomeButton = view.findViewById(R.id.income_button);
         expenseButton = view.findViewById(R.id.expense_button);
         scaleButton = view.findViewById(R.id.scale_button);
+        dateButton = view.findViewById(R.id.date_button);
+
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDateDialog();
+            }
+        });
 
         incomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +98,21 @@ public class StatisticsFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void showDateDialog(){
+        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                .title("统计起止日期")
+                .customView(R.layout.dialog_statistics_date,true)
+                .positiveText("确定")
+                .negativeText("取消")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                    }
+                }).build();
+        dialog.show();
     }
 
     private void initPieChart(String centerText){

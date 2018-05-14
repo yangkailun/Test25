@@ -14,7 +14,7 @@ public class Welcome extends AppCompatActivity implements Runnable{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        ImageView imageView = (ImageView)findViewById(R.id.image);
+        ImageView imageView = findViewById(R.id.image);
         Glide.with(this).load(R.drawable.charlie).into(imageView);  //Glide的效果确实好了不少
         new Thread(this).start();
     }

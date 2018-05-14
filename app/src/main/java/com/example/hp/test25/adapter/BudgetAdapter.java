@@ -92,7 +92,7 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.ViewHolder
                 int position = holder.getAdapterPosition();
                 Budget budget = mBudgetList.get(position);
                 List<Deal> incomeDeals = DataSupport
-                        .where("direction=? and time>? and time<?"
+                        .where("direction=? and time>=? and time<=?"
                                 ,Deal.INCOME+""
                                 ,budget.getStartTime()+""
                                 ,budget.getEndTime()+"")
@@ -102,7 +102,7 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.ViewHolder
                     income = income + incomeDeals.get(i).getMoney();
                 }
                 List<Deal> expenseDeals = DataSupport
-                        .where("direction=? and time>? and time<?"
+                        .where("direction=? and time>=? and time<=?"
                                 ,Deal.EXPENSES+""
                                 ,budget.getStartTime()+""
                                 ,budget.getEndTime()+"")
@@ -133,7 +133,7 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.ViewHolder
         holder.startTimeView.setText(TimeUti.outPutTime(budget.getStartTime()));
         holder.endTimeView.setText(TimeUti.outPutTime(budget.getEndTime()));
         List<Deal> incomeDeals = DataSupport
-                .where("direction=? and time>? and time<?"
+                .where("direction=? and time>=? and time<=?"
                 ,Deal.INCOME+""
                 ,budget.getStartTime()+""
                 ,budget.getEndTime()+"")
@@ -149,7 +149,7 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.ViewHolder
             holder.incomeBar.setProgress(100);
         }
         List<Deal> expenseDeals = DataSupport
-                .where("direction=? and time>? and time<?"
+                .where("direction=? and time>=? and time<=?"
                 ,Deal.EXPENSES+""
                 ,budget.getStartTime()+""
                 ,budget.getEndTime()+"")
