@@ -1,19 +1,25 @@
 package com.example.hp.test25.view;
 
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.hp.test25.R;
 import com.example.hp.test25.object.Deal;
+import com.example.hp.test25.util.TimeUti;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -27,6 +33,8 @@ import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +54,12 @@ public class StatisticsFragment extends Fragment {
 
     private Button incomeButton, expenseButton, scaleButton,dateButton;
 
+    private TextView dateTextView,balanceTextView;
+
+    private EditText startYear,endYear,startMonth,endMonth,startDay,endDay;
+
+    private int startTime,endTime;
+
     public StatisticsFragment() {
         // Required empty public constructor
     }
@@ -60,6 +74,8 @@ public class StatisticsFragment extends Fragment {
         expenseButton = view.findViewById(R.id.expense_button);
         scaleButton = view.findViewById(R.id.scale_button);
         dateButton = view.findViewById(R.id.date_button);
+        dateTextView = view.findViewById(R.id.date_textview);
+        balanceTextView = view.findViewById(R.id.balance);
 
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +108,12 @@ public class StatisticsFragment extends Fragment {
             }
         });
 
+        SharedPreferences pref = getContext().getSharedPreferences("date",MODE_PRIVATE);
+        startTime = pref.getInt("startTime",0);
+        endTime = pref.getInt("endTime",0);
+
+        dateTextView.setText(TimeUti.outPutTime(startTime)+"到"+TimeUti.outPutTime(endTime));
+
         incomePieChart = view.findViewById(R.id.income_chart);
         initPieChart("收支比例");
         setScaleData();
@@ -109,9 +131,41 @@ public class StatisticsFragment extends Fragment {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
+                        if(TextUtils.isEmpty(startYear.getText())||TextUtils.isEmpty(endYear.getText())
+                                ||TextUtils.isEmpty(startMonth.getText())||TextUtils.isEmpty(endMonth.getText())
+                                ||TextUtils.isEmpty(startDay.getText())||TextUtils.isEmpty(endDay.getText())
+                                ){
+                            Toast.makeText(getActivity(),"信息不全",Toast.LENGTH_SHORT).show();
+                        }else {
+                            int startTimeOne = Integer.parseInt(startYear.getText().toString()) * 10000
+                                    + Integer.parseInt(startMonth.getText().toString()) * 100
+                                    + Integer.parseInt(startDay.getText().toString());
+                            int endTimeOne = Integer.parseInt(endYear.getText().toString()) * 10000
+                                    + Integer.parseInt(endMonth.getText().toString()) * 100
+                                    + Integer.parseInt(endDay.getText().toString());
+                            if (startTimeOne <= endTimeOne) {
+                                SharedPreferences.Editor editor = getContext().getSharedPreferences("date",
+                                        MODE_PRIVATE).edit();
+                                editor.putInt("startTime",startTimeOne);
+                                editor.putInt("endTime",endTimeOne);
+                                editor.apply();
+                                startTime = startTimeOne;
+                                endTime = endTimeOne;
+                                dateTextView.setText(TimeUti.outPutTime(startTime)+"到"+TimeUti.outPutTime(endTime));
+                                initPieChart("收支比例");
+                                setScaleData();
+                            } else {
+                                Toast.makeText(getActivity(), "开始时间大于结束时间，请重新设置", Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }).build();
+        startYear = dialog.getCustomView().findViewById(R.id.start_year);
+        startMonth = dialog.getCustomView().findViewById(R.id.start_month);
+        startDay = dialog.getCustomView().findViewById(R.id.start_day);
+        endYear = dialog.getCustomView().findViewById(R.id.end_year);
+        endMonth = dialog.getCustomView().findViewById(R.id.end_month);
+        endDay = dialog.getCustomView().findViewById(R.id.end_day);
         dialog.show();
     }
 
@@ -149,12 +203,14 @@ public class StatisticsFragment extends Fragment {
         float investIncome = 0.0f;
         float otherIncome = 0.0f;
         for(int i = 0; i < deals.size(); i++){
-            if(deals.get(i).getType()==Deal.PROFESSION){
-                profeIncome = profeIncome + deals.get(i).getMoney();
-            }else if(deals.get(i).getType() == Deal.INVEST){
-                investIncome = investIncome + deals.get(i).getMoney();
-            }else{
-                otherIncome = otherIncome + deals.get(i).getMoney();
+            if(deals.get(i).getTime()>=startTime && deals.get(i).getTime()<=endTime) {
+                if (deals.get(i).getType() == Deal.PROFESSION) {
+                    profeIncome = profeIncome + deals.get(i).getMoney();
+                } else if (deals.get(i).getType() == Deal.INVEST) {
+                    investIncome = investIncome + deals.get(i).getMoney();
+                } else {
+                    otherIncome = otherIncome + deals.get(i).getMoney();
+                }
             }
         }
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
@@ -215,16 +271,18 @@ public class StatisticsFragment extends Fragment {
         float walk = 0.0f;
         float other = 0.0f;
         for(int i = 0; i < deals.size(); i ++){
-            if(deals.get(i).getType() == Deal.CLOTHES){
-                clothes = clothes + deals.get(i).getMoney();
-            }else if(deals.get(i).getType() == Deal.FOOD){
-                food = food + deals.get(i).getMoney();
-            }else if(deals.get(i).getType() == Deal.HOME){
-                home = home + deals.get(i).getMoney();
-            }else if(deals.get(i).getType() == Deal.WALK){
-                walk = walk + deals.get(i).getMoney();
-            }else {
-                other = other + deals.get(i).getMoney();
+            if(deals.get(i).getTime()>=startTime && deals.get(i).getTime()<=endTime) {
+                if (deals.get(i).getType() == Deal.CLOTHES) {
+                    clothes = clothes + deals.get(i).getMoney();
+                } else if (deals.get(i).getType() == Deal.FOOD) {
+                    food = food + deals.get(i).getMoney();
+                } else if (deals.get(i).getType() == Deal.HOME) {
+                    home = home + deals.get(i).getMoney();
+                } else if (deals.get(i).getType() == Deal.WALK) {
+                    walk = walk + deals.get(i).getMoney();
+                } else {
+                    other = other + deals.get(i).getMoney();
+                }
             }
         }
         ArrayList<PieEntry> entries = new ArrayList<>();
@@ -286,12 +344,15 @@ public class StatisticsFragment extends Fragment {
         float income = 0.0f;
         float expense = 0.0f;
         for (int i = 0; i < deals.size(); i++) {
-            if (deals.get(i).getDirection() == Deal.INCOME) {
-                income = income + deals.get(i).getMoney();
-            } else {
-                expense = expense + deals.get(i).getMoney();
+            if(deals.get(i).getTime()>=startTime && deals.get(i).getTime()<=endTime) {
+                if (deals.get(i).getDirection() == Deal.INCOME) {
+                    income = income + deals.get(i).getMoney();
+                } else {
+                    expense = expense + deals.get(i).getMoney();
+                }
             }
         }
+        balanceTextView.setText(""+(income-expense));
         ArrayList<PieEntry> entries = new ArrayList<>();
 
         if(Float.compare(income,0.0f) != 0){
